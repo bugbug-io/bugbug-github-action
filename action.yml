@@ -1,0 +1,51 @@
+name: "BugBug Cloud Runner"
+description: "Official GitHub Action for running tests and suites on BugBug Cloud."
+inputs:
+  apiToken:
+    description: "A token to authenticate with BugBug. Available only for paid plans."
+    required: true
+  runType:
+    description: "Type of run. Can be 'test' or 'suite'."
+    required: true
+    default: "test"
+  version:
+    description: "Run with specific version"
+    required: false
+    default: "latest"
+  profileName:
+    description: "Run with specific profile by providing its name (string)"
+    required: false
+  variables:
+    description: "Override variable during single run."
+    required: false
+  noProgress:
+    description: "Don't show progress spinner. Useful for CI/CD."
+    required: false
+    default: "true"
+  noWait:
+    description: "Exit immediately. Don't wait for result."
+    required: false
+    default: "false"
+  debug:
+    description: "Show more data (like raw API response)."
+    required: false
+    default: "false"
+runs:
+  using: "composite"
+  steps:
+    - name: "Install BugBug CLI"
+      uses: actions/setup-node@v3.6.0
+      with:
+        node-version: 20
+      run: |
+        npm i -g bugbug-cli@{{ inputs.version }}
+
+    - name: "Run on BugBug"
+      shell: bash
+      run: ${{ github.action_path }}/test/script.sh
+      env:
+        API_TOKEN: ${{ inputs.apiToken }}
+        RUN_TYPE: ${{ inputs.runType }}
+        PROFILE_NAME: ${{ inputs.profileName }}
+        VARIABLES: ${{ inputs.variables }}
+        DEBUG: ${{ inputs.debug }}
