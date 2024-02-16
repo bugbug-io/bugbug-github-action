@@ -1,21 +1,28 @@
-name: Action test run
+name: Action flow checks
 
 on:
   workflow_dispatch:
 
 jobs:
-  runTest:
+  runTestCheck:
+    name: Run test check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Run BugBug sample test
-        uses: ./ # Uses an action in the root directory
+      - name: Run sample test
+        uses: ./
         with:
           apiToken: ${{ secrets.API_TOKEN }}
-          runType: test
-          variables: |
-            {
-              "variable1": "value1",
-              "variable2": "value2"
-            }
-          debug: true
+          testId: ${{ secrets.TEST_ID }}
+          profileName: Custom profile
+          variables: "var1=value1,var2=value2"
+  runSuiteCheck:
+    name: Run suite check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run sample suite
+        uses: ./
+        with:
+          apiToken: ${{ secrets.API_TOKEN }}
+          suiteId: ${{ secrets.SUITE_ID }}

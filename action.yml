@@ -4,12 +4,14 @@ inputs:
   apiToken:
     description: "A token to authenticate with BugBug. Available only for paid plans."
     required: true
-  runType:
-    description: "Type of run. Can be 'test' or 'suite'."
-    required: true
-    default: "test"
+  testId:
+    description: "Run with specific test ID."
+    required: false
+  suiteId:
+    description: "Run with specific suite ID."
+    required: false
   version:
-    description: "Run with specific version"
+    description: 'Run with specific version. Default: "latest"'
     required: false
     default: "latest"
   profileName:
@@ -18,14 +20,6 @@ inputs:
   variables:
     description: "Override variable during single run."
     required: false
-  noProgress:
-    description: "Don't show progress spinner. Useful for CI/CD."
-    required: false
-    default: "true"
-  noWait:
-    description: "Exit immediately. Don't wait for result."
-    required: false
-    default: "false"
   debug:
     description: "Show more data (like raw API response)."
     required: false
@@ -33,19 +27,21 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: "Install BugBug CLI"
-      uses: actions/setup-node@v3.6.0
+    - uses: actions/setup-node@v4.0.2
       with:
         node-version: 20
-      run: |
-        npm i -g bugbug-cli@{{ inputs.version }}
+
+    - name: "Install BugBug CLI"
+      shell: bash
+      run: npm i -g @testrevolution/bugbug-cli@${{ inputs.version }}
 
     - name: "Run on BugBug"
       shell: bash
-      run: ${{ github.action_path }}/test/script.sh
+      run: ${{ github.action_path }}.github/scripts/run.sh
       env:
         API_TOKEN: ${{ inputs.apiToken }}
-        RUN_TYPE: ${{ inputs.runType }}
+        SUITE_ID: ${{ inputs.suiteId }}
+        TEST_ID: ${{ inputs.testId }}
         PROFILE_NAME: ${{ inputs.profileName }}
         VARIABLES: ${{ inputs.variables }}
         DEBUG: ${{ inputs.debug }}

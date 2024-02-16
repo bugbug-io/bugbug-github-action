@@ -1,1 +1,0 @@
-bugbug remote run $RUN_TYPE --api-token $API_TOKEN --profile $PROFILE_NAME --variable ${{ inputs.variable }} --debug $DEBUG --no-progress --no-wait
