@@ -56,7 +56,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run BugBug Cloud Runner
-        uses: bugbug-io/bugbug-github-action@v1.0.1
+        uses: bugbug-io/bugbug-github-action
         with:
           apiToken: ${{ secrets.BUGBUG_API_TOKEN }}
           testId: "Your BugBug test ID"
