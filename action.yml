@@ -48,7 +48,7 @@ runs:
       run: npm i -g @testrevolution/bugbug-cli@${{ inputs.version }}
 
     - name: "Run on BugBug"
-      shell: sh
+      shell: bash
       run: ${{ github.action_path }}/.github/scripts/run.sh
       env:
         API_TOKEN: ${{ inputs.apiToken }}
