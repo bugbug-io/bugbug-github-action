@@ -17,6 +17,10 @@ inputs:
   profileName:
     description: "Run with specific profile by providing its name (string)"
     required: false
+  outputPath:
+    description: "Path to save the junit report file."
+    required: false
+    default: "test-report.xml"
   variables:
     description: "Override variable during single run."
     required: false
@@ -45,3 +49,4 @@ runs:
         PROFILE_NAME: ${{ inputs.profileName }}
         VARIABLES: ${{ inputs.variables }}
         DEBUG: ${{ inputs.debug }}
+        OUTPUT_PATH: ${{ inputs.outputPath }}

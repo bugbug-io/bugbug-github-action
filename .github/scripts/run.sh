@@ -15,6 +15,10 @@ if [ -n "$DEBUG" ]; then
     extra_args+=("--debug=$DEBUG")
 fi
 
+if [ -n "$OUTPUT_PATH" ]; then
+    extra_args+=("--output-path=$OUTPUT_PATH")
+fi
+
 if [ -n "$VARIABLES" ]; then
     IFS=',' read -ra elements <<< "$myVar"
 
@@ -27,4 +31,4 @@ fi
 echo "$DEBUG $PROFILE_NAME $VARIABLES"
 
 bugbug config set-token $API_TOKEN
-bugbug remote run $run_context $related_id --no-progress "${extra_args[@]}"
+bugbug remote run $run_context $related_id --no-progress "${extra_args[@]}" --reporter=junit
