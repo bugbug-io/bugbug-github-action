@@ -37,6 +37,8 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - uses: actions/checkout@v4
+
     - uses: actions/setup-node@v4.0.2
       with:
         node-version: 20
@@ -47,7 +49,7 @@ runs:
 
     - name: "Run on BugBug"
       shell: bash
-      run: ${{ github.action_path }}.github/scripts/run.sh
+      run: ./.github/scripts/run.sh
       env:
         API_TOKEN: ${{ inputs.apiToken }}
         SUITE_ID: ${{ inputs.suiteId }}
