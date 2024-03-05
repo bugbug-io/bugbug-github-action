@@ -1,0 +1,52 @@
+name: "BugBug Cloud Runner"
+description: "Official GitHub Action for running tests and suites on BugBug Cloud."
+inputs:
+  apiToken:
+    description: "A token to authenticate with BugBug. Available only for paid plans."
+    required: true
+  testId:
+    description: "Run with specific test ID."
+    required: false
+  suiteId:
+    description: "Run with specific suite ID."
+    required: false
+  version:
+    description: 'Run with specific version. Default: "latest"'
+    required: false
+    default: "latest"
+  profileName:
+    description: "Run with specific profile by providing its name (string)"
+    required: false
+  outputPath:
+    description: "Path to save the junit report file."
+    required: false
+    default: "test-results.xml"
+  variables:
+    description: "Override variable during single run."
+    required: false
+  debug:
+    description: "Show more data (like raw API response)."
+    required: false
+    default: "false"
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-node@v4.0.2
+      with:
+        node-version: 20
+
+    - name: "Install BugBug CLI"
+      shell: bash
+      run: npm i -g @testrevolution/bugbug-cli@${{ inputs.version }}
+
+    - name: "Run on BugBug"
+      shell: bash
+      run: ${{ github.action_path }}.github/scripts/run.sh
+      env:
+        API_TOKEN: ${{ inputs.apiToken }}
+        SUITE_ID: ${{ inputs.suiteId }}
+        TEST_ID: ${{ inputs.testId }}
+        PROFILE_NAME: ${{ inputs.profileName }}
+        VARIABLES: ${{ inputs.variables }}
+        DEBUG: ${{ inputs.debug }}
+        OUTPUT_PATH: ${{ inputs.outputPath }}
