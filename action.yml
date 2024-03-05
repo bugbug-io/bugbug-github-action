@@ -1,4 +1,5 @@
 name: "BugBug Cloud Runner"
+version: "1.0.0"
 description: "Official GitHub Action for running tests and suites on BugBug Cloud."
 inputs:
   apiToken:
