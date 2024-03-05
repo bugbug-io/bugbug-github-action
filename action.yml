@@ -1,6 +1,11 @@
 name: "BugBug Cloud Runner"
+author: "BugBug"
 version: "1.0.0"
 description: "Official GitHub Action for running tests and suites on BugBug Cloud."
+icon: "bold"
+branding:
+  color: "purple"
+  icon: "bold"
 inputs:
   apiToken:
     description: "A token to authenticate with BugBug. Available only for paid plans."
