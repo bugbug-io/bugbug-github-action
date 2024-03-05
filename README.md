@@ -36,6 +36,12 @@ Official GitHub action to run tests and suites on BugBug Cloud.
 - **Required**: No
 - **Default**: false
 
+`outputPath`
+
+- **Description**: Path to the output file with the test results (junit).
+- **Required**: No
+- **Default**: `test-results.xml`
+
 ### Example Usage
 
 ```yaml

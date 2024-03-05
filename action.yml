@@ -20,7 +20,7 @@ inputs:
   outputPath:
     description: "Path to save the junit report file."
     required: false
-    default: "test-report.xml"
+    default: "test-results.xml"
   variables:
     description: "Override variable during single run."
     required: false
