@@ -3,6 +3,7 @@
 </p>
 
 ## BugBug Cloud Runner
+
 Official GitHub action to run tests and suites on BugBug Cloud.
 
 > [!IMPORTANT]
@@ -42,6 +43,16 @@ Official GitHub action to run tests and suites on BugBug Cloud.
 - **Required**: No
 - **Default**: `test-results.xml`
 
+### Outputs
+
+`suiteRunId`
+
+- **Description**: The Run ID when executing passing a suiteId.
+
+`testRunId`
+
+- **Description**: The Run ID when executing passing a testId.
+
 ### Example Usage
 
 ```yaml
@@ -56,6 +67,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run BugBug Cloud Runner
+        id: run-bugbug-tests
         uses: bugbug-io/bugbug-github-action@v1.0.2
         with:
           apiToken: ${{ secrets.BUGBUG_API_TOKEN }}
@@ -64,4 +76,8 @@ jobs:
           profileName: "Your BugBug profile name"
           variables: "key1=value1,key2=value2"
           debug: "true"
+
+      - name: Getting Run Output
+        run: |
+          echo "Suite Run ID: ${{ steps.run-bugbug-tests.outputs.suiteRunId }} | Test Run ID: ${{ steps.run-bugbug-tests.outputs.testRunId }}"
 ```

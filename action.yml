@@ -34,6 +34,13 @@ inputs:
     description: "Show more data (like raw API response)."
     required: false
     default: "false"
+outputs:
+  suiteRunId:
+    description: "The Run ID when executing passing a suiteId."
+    value: ${{ steps.run-on-bugbug.outputs.suiteRunId }}
+  testRunId:
+    description: "The Run ID when executing passing a testId."
+    value: ${{ steps.run-on-bugbug.outputs.testRunId }}
 runs:
   using: "composite"
   steps:
@@ -48,6 +55,7 @@ runs:
       run: npm i -g @testrevolution/bugbug-cli@${{ inputs.version }}
 
     - name: "Run on BugBug"
+      id: run-on-bugbug
       shell: bash
       run: ${{ github.action_path }}/.github/scripts/run.sh
       env:
