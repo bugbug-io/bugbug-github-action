@@ -79,5 +79,6 @@ jobs:
 
       - name: Getting Run Output
         run: |
-          echo "Suite Run ID: ${{ steps.run-bugbug-tests.outputs.suiteRunId }} | Test Run ID: ${{ steps.run-bugbug-tests.outputs.testRunId }}"
+          echo "Suite Run ID: ${{ steps.run-bugbug-tests.outputs.suiteRunId }}"
+          echo "Test Run ID: ${{ steps.run-bugbug-tests.outputs.testRunId }}"
 ```
