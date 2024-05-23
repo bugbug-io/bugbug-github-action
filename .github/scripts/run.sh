@@ -30,5 +30,23 @@ fi
 
 echo "$DEBUG $PROFILE_NAME $VARIABLES"
 
+tmp_output=$(mktemp)
+
 bugbug config set-token $API_TOKEN
-bugbug remote run $run_context $related_id --no-progress "${extra_args[@]}" --reporter=junit
+bugbug remote run $run_context $related_id --no-progress "${extra_args[@]}" --reporter=junit | tee $tmp_output
+bugbug_status=${PIPESTATUS[0]}
+
+# Setting output suiteRunId or testRunId
+while IFS= read -r line; do
+    if [[ $line =~ suiteRunId:\ ([a-z0-9-]+) ]]; then
+        SUITE_RUN_ID="${BASH_REMATCH[1]}"
+        echo "Setting output suiteRunId = $SUITE_RUN_ID"
+        echo "suiteRunId=${SUITE_RUN_ID}" >> $GITHUB_OUTPUT
+    elif [[ $line =~ testRunId:\ ([a-z0-9-]+) ]]; then
+        TEST_RUN_ID="${BASH_REMATCH[1]}"
+        echo "Setting output testRunId = $TEST_RUN_ID"
+        echo "testRunId=${TEST_RUN_ID}" >> $GITHUB_OUTPUT
+    fi
+done < $tmp_output
+
+exit $bugbug_status
