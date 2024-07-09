@@ -33,7 +33,7 @@ echo "$DEBUG $PROFILE_NAME $VARIABLES"
 tmp_output=$(mktemp)
 
 bugbug config set-token $API_TOKEN
-bugbug remote run $run_context $related_id --no-progress "${extra_args[@]}" --reporter=junit | tee $tmp_output
+bugbug remote run $run_context $related_id --no-progress "${extra_args[@]}" --reporter=junit --triggered-by=github | tee $tmp_output
 bugbug_status=${PIPESTATUS[0]}
 
 # Setting output suiteRunId or testRunId
