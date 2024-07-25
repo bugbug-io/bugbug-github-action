@@ -68,7 +68,7 @@ jobs:
 
       - name: Run BugBug Cloud Runner
         id: run-bugbug-tests
-        uses: bugbug-io/bugbug-github-action@v1.2.0
+        uses: bugbug-io/bugbug-github-action@v1.2.1
         with:
           apiToken: ${{ secrets.BUGBUG_API_TOKEN }}
           testId: "Your BugBug test ID"

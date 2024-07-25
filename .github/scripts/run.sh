@@ -20,11 +20,9 @@ if [ -n "$OUTPUT_PATH" ]; then
 fi
 
 if [ -n "$VARIABLES" ]; then
-    IFS=',' read -ra elements <<< "$myVar"
-
-    # Add something to each element in the array
-    for ((i=0; i<${#elements[@]}; i++)); do
-        extra_args+="--variable=${elements[$i]}"
+    IFS=',' read -ra var_pairs <<< "$VARIABLES"
+    for pair in "${var_pairs[@]}"; do
+        extra_args+=("--variable='$pair'")
     done
 fi
 
@@ -33,7 +31,7 @@ echo "$DEBUG $PROFILE_NAME $VARIABLES"
 tmp_output=$(mktemp)
 
 bugbug config set-token $API_TOKEN
-bugbug remote run $run_context $related_id --no-progress "${extra_args[@]}" --reporter=junit --triggered-by=github | tee $tmp_output
+bugbug remote run $run_context $related_id --no-progress --reporter=junit --triggered-by=github "${extra_args[@]}" | tee $tmp_output
 bugbug_status=${PIPESTATUS[0]}
 
 # Setting output suiteRunId or testRunId

@@ -26,3 +26,11 @@ jobs:
         with:
           apiToken: ${{ secrets.API_TOKEN }}
           suiteId: ${{ secrets.SUITE_ID }}
+  getOutput:
+    name: Get output
+    runs-on: ubuntu-latest
+    needs: [runTestCheck, runSuiteCheck]
+    steps:
+      - name: Getting Run Output
+        run: |
+          echo "Suite Run ID: ${{ steps.runSuiteCheck.outputs.suiteRunId }} | Test Run ID: ${{ steps.runTestCheck.outputs.testRunId }}"
