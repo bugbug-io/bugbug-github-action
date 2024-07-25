@@ -28,7 +28,7 @@ Official GitHub action to run tests and suites on BugBug Cloud.
 
 `variables`
 
-- **Description**: Override variable during a single run. Pass all variables in a format: `key1=value1,key2=value2`.
+- **Description**: Override variable during a single run. Pass all variables in a format: `key1=value1,key2=value2`. All overridden variables should be defined in BugBug as well.
 - **Required**: No
 
 `debug`
@@ -68,7 +68,7 @@ jobs:
 
       - name: Run BugBug Cloud Runner
         id: run-bugbug-tests
-        uses: bugbug-io/bugbug-github-action@v1.2.0
+        uses: bugbug-io/bugbug-github-action@v1.2.1
         with:
           apiToken: ${{ secrets.BUGBUG_API_TOKEN }}
           testId: "Your BugBug test ID"
