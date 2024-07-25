@@ -22,7 +22,7 @@ fi
 if [ -n "$VARIABLES" ]; then
     IFS=',' read -ra var_pairs <<< "$VARIABLES"
     for pair in "${var_pairs[@]}"; do
-        extra_args+=("--variable='$pair'")
+        extra_args+=("--variable=$pair")
     done
 fi
 
