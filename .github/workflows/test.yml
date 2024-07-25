@@ -15,7 +15,7 @@ jobs:
           apiToken: ${{ secrets.API_TOKEN }}
           testId: ${{ secrets.TEST_ID }}
           profileName: Custom profile
-          variables: "testRunId=12345,randomName=value2"
+          variables: "var1=value1,var2=value2"
   runSuiteCheck:
     name: Run suite check
     runs-on: ubuntu-latest
