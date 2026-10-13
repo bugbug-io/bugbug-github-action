@@ -1,6 +1,6 @@
 name: "BugBug Cloud Runner"
 author: "BugBug"
-version: "1.0.0"
+version: "2.0.0"
 description: "Official GitHub Action for running tests and suites on BugBug Cloud."
 icon: "bold"
 branding:
@@ -30,8 +30,11 @@ inputs:
   variables:
     description: "Override variable during single run."
     required: false
+  tags:
+    description: "Comma-separated tags to assign to the run."
+    required: false
   debug:
-    description: "Show more data (like raw API response)."
+    description: "Enable verbose CLI logs."
     required: false
     default: "false"
 outputs:
@@ -48,11 +51,11 @@ runs:
 
     - uses: actions/setup-node@v4.0.2
       with:
-        node-version: 22
+        node-version: 24
 
     - name: "Install BugBug CLI"
       shell: bash
-      run: npm i -g @testrevolution/bugbug-cli@${{ inputs.version }}
+      run: npm i -g @bugbug-io/cli@${{ inputs.version }}
 
     - name: "Run on BugBug"
       id: run-on-bugbug
@@ -64,5 +67,6 @@ runs:
         TEST_ID: ${{ inputs.testId }}
         PROFILE_NAME: ${{ inputs.profileName }}
         VARIABLES: ${{ inputs.variables }}
+        TAGS: ${{ inputs.tags }}
         DEBUG: ${{ inputs.debug }}
         OUTPUT_PATH: ${{ inputs.outputPath }}

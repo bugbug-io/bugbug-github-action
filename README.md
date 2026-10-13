@@ -26,6 +26,17 @@ Official GitHub action to run tests and suites on BugBug Cloud.
 - **Description**: Run with a specific profile by providing its name (string).
 - **Required**: No
 
+`tags`
+
+- **Description**: Comma-separated tags to assign to the run. Tags that do not already exist in the project are created automatically.
+- **Required**: No
+
+`version`
+
+- **Description**: Version of `@bugbug-io/cli` to install.
+- **Required**: No
+- **Default**: `latest`
+
 `variables`
 
 - **Description**: Override variable during a single run. Pass all variables in a format: `key1=value1,key2=value2`. All overridden variables should be defined in BugBug as well.
@@ -33,7 +44,7 @@ Official GitHub action to run tests and suites on BugBug Cloud.
 
 `debug`
 
-- **Description**: Show more data (like raw API response).
+- **Description**: Enable verbose CLI logs.
 - **Required**: No
 - **Default**: false
 
@@ -68,13 +79,14 @@ jobs:
 
       - name: Run BugBug Cloud Runner
         id: run-bugbug-tests
-        uses: bugbug-io/bugbug-github-action@v1.2.2
+        uses: bugbug-io/bugbug-github-action@v2.0.0
         with:
           apiToken: ${{ secrets.BUGBUG_API_TOKEN }}
           testId: "Your BugBug test ID"
           suiteId: "Your BugBug suite ID"
           profileName: "Your BugBug profile name"
           variables: "key1=value1,key2=value2"
+          tags: "smoke,nightly"
           debug: "true"
 
       - name: Getting Run Output
